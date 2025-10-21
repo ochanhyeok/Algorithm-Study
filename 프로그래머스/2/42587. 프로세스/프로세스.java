@@ -3,34 +3,34 @@ import java.util.*;
 class Solution {
     public int solution(int[] priorities, int location) {
         Queue<int[]> queue = new LinkedList<>();
-        int answer = 0;
+        int result = 0;
         
-        // 큐에 중요도, 현재 인덱스 삽입
+        // 큐에 우선순위아 인덱스 삽입
         for(int i = 0; i < priorities.length; i++){
-            queue.add(new int[]{priorities[i], i});
+            queue.offer(new int[]{priorities[i], i});
         }
         
         while(!queue.isEmpty()){
-            int cur[] = queue.poll();
-            
+            int cur[] = queue.poll(); // 현재 우선순위
             boolean hasHighPriority = false;
-            for(int[] item : queue){
-                if(cur[0] < item[0]){ // 큐에있는 우선순위 비교
+            
+            for(int[] item : queue){ // 큐 탐색해서 가장 높은 우선순위 찾기
+                if(cur[0] < item[0]){
                     hasHighPriority = true;
-                    break;
                 }
             }
             
-            if(hasHighPriority){ // cur보다 큰 우선순위가 있으면 cur다시 삽입
-                queue.add(cur);
+            if(hasHighPriority){ // cur보다 큰 우선순위가 있다면
+                queue.offer(cur); // 큐 뒤에 다시 추가    
             }
             else{ // cur의 우선순위가 가장 크다면
-                answer++;
-                if(location == cur[1]){ // 찾는 위치가 인덱스와 같으면
-                    return answer;
+                result++;
+                if(location == cur[1]){ // 찾고자하는 loc이랑 인덱스가 같으면
+                    return result;
                 }
             }
         }
-        return answer;
+        
+        return result;
     }
 }
