@@ -1,15 +1,9 @@
+import java.util.*;
+
 class Solution {
     public String solution(String my_string) {
-        StringBuilder sb = new StringBuilder();
+        String[] str = my_string.split("a|e|i|o|u");
         
-        for(int i = 0; i < my_string.length(); i++){
-            char ch = my_string.charAt(i);
-            if(ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u'){
-                continue;
-            }
-            sb.append(ch);
-        }
-        
-        return sb.toString();
+        return String.join("", str);
     }
 }
