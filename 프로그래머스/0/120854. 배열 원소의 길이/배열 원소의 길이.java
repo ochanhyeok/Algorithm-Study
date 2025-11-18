@@ -1,0 +1,13 @@
+import java.util.*;
+
+class Solution {
+    public int[] solution(String[] strlist) {
+        List<Integer> list = new ArrayList<>();
+        
+        for(String s : strlist){
+            list.add(s.length());
+        }
+        
+        return list.stream().mapToInt(i -> i).toArray();
+    }
+}
