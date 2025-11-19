@@ -8,12 +8,17 @@ class Solution {
         
         for(int i = 1; i <= 200; i++){
             boolean flag = false;
-            for(int j = i; j > 0; j/=10){
-                int num = j % 10;
-                if(num == 3){
-                    flag = true;
-                    break;
-                }
+            // for(int j = i; j > 0; j/=10){
+            //     int num = j % 10;
+            //     if(num == 3){
+            //         flag = true;
+            //         break;
+            //     }
+            // }
+            
+            String str = "" + i;
+            if(str.contains("3")){
+                flag = true;
             }
             
             if(!flag){
