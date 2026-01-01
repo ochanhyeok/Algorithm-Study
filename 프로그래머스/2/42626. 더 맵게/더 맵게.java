@@ -9,6 +9,7 @@ class Solution {
             pq.offer(sco);
         }
         
+        
         while(pq.peek() < K){
             if(pq.size() < 2){
                 return -1;
