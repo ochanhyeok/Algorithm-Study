@@ -1,5 +1,3 @@
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,11 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class Main{
+public class Main {
 
 	static boolean[] visited;
 	static List<Integer>[] graph;
-	static int[] leaf;
 	static int removeNode;
 	static int leafCnt;
 
@@ -19,9 +16,8 @@ public class Main{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		int N = Integer.parseInt(br.readLine());
-		graph = new ArrayList[N];
+		graph = new List[N];
 		visited = new boolean[N];
-		leaf = new int[N];
 		int[] parent = new int[N];
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -40,7 +36,6 @@ public class Main{
 		}
 
 		int remove = Integer.parseInt(br.readLine());
-		// root를 삭제하면 트리 자체가 없어짐
 		if (remove == root) {
 			System.out.println(0);
 			return;
@@ -50,7 +45,7 @@ public class Main{
 		removeNode = remove;
 		dfs(root);
 		System.out.println(leafCnt);
-		
+
 	}
 
 	static void dfs(int cur) {
@@ -58,7 +53,6 @@ public class Main{
 		int childCnt = 0;
 
 		for (int next : graph[cur]) {
-			// 삭제된 노드로는 안 내려감
 			if (next == removeNode) {
 				continue;
 			}
@@ -74,3 +68,4 @@ public class Main{
 		}
 	}
 }
+
