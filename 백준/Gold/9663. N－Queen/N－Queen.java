@@ -1,8 +1,6 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Map;
 
 public class Main {
 
@@ -14,9 +12,10 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		N = Integer.parseInt(br.readLine());
-		col = new int[N];
 
+		col = new int[N];
 		dfs(0);
+
 		System.out.println(cnt);
 	}
 
@@ -28,7 +27,7 @@ public class Main {
 
 		for (int i = 0; i < N; i++) {
 			col[row] = i;
-			if (isPossible(row)) {
+			if(isPossible(row)){
 				dfs(row + 1);
 			}
 		}
@@ -36,14 +35,19 @@ public class Main {
 
 	static boolean isPossible(int row) {
 		for (int i = 0; i < row; i++) {
+			// 열비교
 			if (col[row] == col[i]) {
 				return false;
 			}
 
-			if (Math.abs(row - i) == Math.abs(col[row] - col[i])) {
+			if (Math.abs(col[row] - col[i]) == Math.abs(row - i)) {
 				return false;
 			}
 		}
+
 		return true;
 	}
+
+
+
 }
