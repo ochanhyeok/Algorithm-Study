@@ -2,21 +2,22 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] arr, int divisor) {
-        int[] answer = {};
-        List<Integer> list = new ArrayList<>();
+        // arr 값 추출 -> list -> 정렬
+        List<Integer> result = new ArrayList<>();
         
-        for(int i = 0; i < arr.length; i++){
-            if(arr[i] % divisor == 0){
-                list.add(arr[i]);
+        for(int num : arr){
+            if(num % divisor == 0){
+                result.add(num);
             }
         }
         
-        if(list.size() == 0){
-            list.add(-1);
+        result.sort((a, b) -> a.compareTo(b));
+        
+        if(result.size() < 1) {
+            return new int[]{-1};
         }
         
-        Collections.sort(list);
-        
-        return list.stream().mapToInt(i -> i).toArray();
+    
+        return result.stream().mapToInt(i -> i).toArray();   
     }
 }
