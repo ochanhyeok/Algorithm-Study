@@ -12,7 +12,7 @@ class Solution {
         while(left <= right){
             int mid = (left + right) / 2;
             
-            if(canRemove(rocks, mid, n, distance)){
+            if(canRemove(rocks, mid, distance, n)){
                 result = mid;
                 left = mid + 1;
             } else {
@@ -23,22 +23,27 @@ class Solution {
         return result;
     }
     
-    static boolean canRemove(int[] rocks, int mid, int n, int distance){
-        int removed = 0;
-        int prev = 0;
+    static boolean canRemove(int[] rocks, int mid, int distance, int n){
+        int removedCnt = 0;
+        int prevRock = 0;
         
         for(int rock : rocks){
-            if(rock - prev < mid){
-                removed++;
+            if(rock - prevRock < mid){
+                removedCnt++;
+                
+                if(removedCnt > n){
+                    return false;
+                }
             } else {
-                prev = rock;
+                prevRock = rock;
             }
         }
         
-        if(distance - prev < mid){
-            removed++;
+        if(distance - prevRock < mid){
+            removedCnt++;
         }
         
-        return removed <= n;
+        return removedCnt <= n;
     }
+    
 }
