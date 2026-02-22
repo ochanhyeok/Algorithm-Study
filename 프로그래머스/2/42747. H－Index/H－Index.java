@@ -12,27 +12,25 @@ class Solution {
         while(left <= right){
             int mid = (left + right) / 2;
             
-            if(findHIdx(citations, mid)){
+            if(canUse(citations, mid)){
                 answer = mid;
-                left = mid + 1;
-            } else {
                 right = mid - 1;
+            } else {
+                left = mid + 1;
             }
         }
         
         return answer;
     }
     
-    // 0 1 3 5 6
-    static boolean findHIdx(int[] citations, int mid){
-        int check = 0;
-        
-        for(int cit : citations){
-            if(cit >= mid){
-                check++;
+    static boolean canUse(int[] citations, int mid){
+        int cnt = 0;
+        for(int ct : citations){
+            if(ct > mid){
+                cnt++;
             }
         }
         
-        return check >= mid;
+        return cnt <= mid;
     }
 }
