@@ -1,6 +1,6 @@
 import java.util.*;
 
-class Solution {  
+class Solution {
     
     static String[] vowels = {"A", "E", "I", "O", "U"};
     static List<String> dict = new ArrayList<>();
@@ -16,7 +16,6 @@ class Solution {
         if(cur.length() > 5){
             return;
         }
-        
         if(cur.length() > 0){
             dict.add(cur);
         }
