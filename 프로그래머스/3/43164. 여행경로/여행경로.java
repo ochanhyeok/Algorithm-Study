@@ -2,9 +2,9 @@ import java.util.*;
 
 class Solution {
     
+    static boolean found;
     static boolean[] visited;
     static String[] answer;
-    static boolean found;
     
     public String[] solution(String[][] tickets) {
         int n = tickets.length;
@@ -20,24 +20,22 @@ class Solution {
         });
         
         answer[0] = "ICN";
-        
         dfs("ICN", 0, tickets);
         
         return answer;
     }
     
-    static void dfs(String now, int depth, String[][] tickets){
+    static void dfs(String cur, int depth, String[][] tickets){
         if(found){
             return;
         }
-        
         if(depth == tickets.length){
             found = true;
             return;
         }
         
         for(int i = 0; i < tickets.length; i++){
-            if(!visited[i] && tickets[i][0].equals(now)){
+            if(!visited[i] && tickets[i][0].equals(cur)){
                 visited[i] = true;
                 answer[depth + 1] = tickets[i][1];
                 dfs(tickets[i][1], depth + 1, tickets);
