@@ -16,7 +16,7 @@ public class Main{
             
             if(str.length() >= cmd[0].length() + cmd[1].length() && str.startsWith(cmd[0]) && str.endsWith(cmd[1])){
                 sb.append("DA\n");
-            } else {
+            } else{
                 sb.append("NE\n");
             }
         }
