@@ -3,8 +3,7 @@ import java.util.*;
 
 public class Main{
     
-    static int N, M;
-    static int answer = 0;
+    static int N, M, max = 0;
     static int[][] grid;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
@@ -15,7 +14,6 @@ public class Main{
         
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        
         grid = new int[N][M];
         
         for(int i = 0; i < N; i++){
@@ -27,34 +25,38 @@ public class Main{
         
         placeWall(0);
         
-        System.out.println(answer);
+        System.out.println(max);
     }
     
-    static void placeWall(int count){
-        if(count == 3){
-            answer = Math.max(answer, bfs());
+    static void placeWall(int cnt){
+        // 최댓값 갱신
+        if(cnt == 3){
+            max = Math.max(max, bfs());
             return;
         }
         
+        // 벽세우기
         for(int i = 0; i < N; i++){
             for(int j = 0; j < M; j++){
                 if(grid[i][j] == 0){
                     grid[i][j] = 1;
-                    placeWall(count + 1);
+                    placeWall(cnt + 1);
                     grid[i][j] = 0;
                 }
             }
         }
     }
     
+    // bfs 탐색
     static int bfs(){
-        int[][] temp = new int[N][M];
         Queue<int[]> q = new LinkedList<>();
+        int[][] temp = new int[N][M];
         
+        // 바이러스 전파
         for(int i = 0; i < N; i++){
             temp[i] = grid[i].clone();
             for(int j = 0; j < M; j++){
-                if(temp[i][j] == 2){
+                if(grid[i][j] == 2){
                     q.add(new int[]{i, j});
                 }
             }
@@ -62,13 +64,12 @@ public class Main{
         
         while(!q.isEmpty()){
             int[] cur = q.poll();
+            
             for(int d = 0; d < 4; d++){
                 int nx = cur[0] + dx[d];
                 int ny = cur[1] + dy[d];
                 
-                if(nx < 0 || nx >= N || ny < 0 || ny >= M){
-                    continue;
-                }
+                if(nx < 0 || nx >= N || ny < 0 || ny >= M) continue;
                 
                 if(temp[nx][ny] == 0){
                     temp[nx][ny] = 2;
@@ -77,6 +78,7 @@ public class Main{
             }
         }
         
+        // 0 카운팅
         int safe = 0;
         for(int[] row : temp){
             for(int v : row){
