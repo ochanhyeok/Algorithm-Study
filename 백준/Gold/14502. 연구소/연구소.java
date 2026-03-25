@@ -3,7 +3,8 @@ import java.util.*;
 
 public class Main{
     
-    static int N, M, max = 0;
+    static int N, M;
+    static int max = 0;
     static int[][] grid;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
@@ -29,17 +30,15 @@ public class Main{
     }
     
     static void placeWall(int cnt){
-        // 최댓값 갱신
         if(cnt == 3){
             max = Math.max(max, bfs());
             return;
         }
         
-        // 벽세우기
         for(int i = 0; i < N; i++){
             for(int j = 0; j < M; j++){
                 if(grid[i][j] == 0){
-                    grid[i][j] = 1;
+                    grid[i][j] = 1; // 벽세움
                     placeWall(cnt + 1);
                     grid[i][j] = 0;
                 }
@@ -47,29 +46,32 @@ public class Main{
         }
     }
     
-    // bfs 탐색
     static int bfs(){
-        Queue<int[]> q = new LinkedList<>();
         int[][] temp = new int[N][M];
+        Queue<int[]> q = new LinkedList<>();
         
-        // 바이러스 전파
+        //  큐에 바이러스의 전파 전 위치를 저장
         for(int i = 0; i < N; i++){
             temp[i] = grid[i].clone();
             for(int j = 0; j < M; j++){
                 if(grid[i][j] == 2){
                     q.add(new int[]{i, j});
-                }
+                }                
             }
         }
         
+        // 큐를 탐색하며 바이러스를 전파
         while(!q.isEmpty()){
             int[] cur = q.poll();
+            int x = cur[0], y = cur[1];
             
             for(int d = 0; d < 4; d++){
-                int nx = cur[0] + dx[d];
-                int ny = cur[1] + dy[d];
+                int nx = x + dx[d];
+                int ny = y + dy[d];
                 
-                if(nx < 0 || nx >= N || ny < 0 || ny >= M) continue;
+                if(nx < 0 || nx >= N || ny < 0 || ny >= M){
+                    continue;
+                }
                 
                 if(temp[nx][ny] == 0){
                     temp[nx][ny] = 2;
@@ -78,7 +80,7 @@ public class Main{
             }
         }
         
-        // 0 카운팅
+        
         int safe = 0;
         for(int[] row : temp){
             for(int v : row){
