@@ -7,15 +7,15 @@ public class Main{
     static char[][] grid;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
-   
+    
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        
         grid = new char[N][M];
+        
         List<int[]> coins = new ArrayList<>();
         for(int i = 0; i < N; i++){
             String line = br.readLine();
@@ -33,9 +33,8 @@ public class Main{
     
     static int bfs(int r1, int c1, int r2, int c2, int step){
         Queue<int[]> q = new LinkedList<>();
-        boolean[][][][] visited = new boolean[N][M][N][M];
-        
         q.add(new int[]{r1, c1, r2, c2, 0});
+        boolean[][][][] visited = new boolean[N][M][N][M];
         visited[r1][c1][r2][c2] = true;
         
         while(!q.isEmpty()){
@@ -53,7 +52,7 @@ public class Main{
                 boolean out2 = nr2 < 0 || nr2 >= N || nc2 < 0 || nc2 >= M;
                 
                 if(out1 && out2) continue;
-                if(out1 || out2) {
+                if(out1 || out2){
                     return cur[4] + 1;
                 }
                 
@@ -72,6 +71,7 @@ public class Main{
                 }
             }
         }
+        
         return -1;
     }
 }
