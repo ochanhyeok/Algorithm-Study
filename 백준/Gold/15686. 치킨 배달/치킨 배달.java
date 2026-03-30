@@ -3,11 +3,12 @@ import java.util.*;
 
 public class Main{
     
-    static int N, M, answer = Integer.MAX_VALUE;
+    static int N, M;
+    static int answer = Integer.MAX_VALUE;
     static int[][] grid;
+    static int[][] selected;
     static List<int[]> homes = new ArrayList<>();
-    static List<int[]> chick = new ArrayList<>();
-    static int[][] selected = new int[13][2];
+    static List<int[]> chicks = new ArrayList<>();
     
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,6 +17,7 @@ public class Main{
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         grid = new int[N][N];
+        selected = new int[M][2];
         
         for(int i = 0; i < N; i++){
             st = new StringTokenizer(br.readLine());
@@ -24,7 +26,7 @@ public class Main{
                 if(grid[i][j] == 1){
                     homes.add(new int[]{i, j});
                 } else if(grid[i][j] == 2){
-                    chick.add(new int[]{i, j});
+                    chicks.add(new int[]{i, j});
                 }
             }
         }
@@ -36,22 +38,23 @@ public class Main{
     
     static void dfs(int start, int cnt){
         if(cnt == M){
-            int total = 0;
+            int time = 0;
             for(int[] home : homes){
                 int minDist = Integer.MAX_VALUE;
                 for(int i = 0; i < M; i++){
                     int dist = Math.abs(home[0] - selected[i][0])
-                         + Math.abs(home[1] - selected[i][1]);
-                    minDist = Math.min(minDist, dist);
+                        + Math.abs(home[1] - selected[i][1]);
+                    minDist = Math.min(dist, minDist);
                 }
-                total += minDist;
+                time += minDist;
             }
-            answer = Math.min(total, answer);
+            
+            answer = Math.min(answer, time); 
             return;
         }
         
-        for(int i = start; i < chick.size(); i++){
-            selected[cnt] = chick.get(i);
+        for(int i = start; i < chicks.size(); i++){
+            selected[cnt] = chicks.get(i);
             dfs(i + 1, cnt + 1);
         }
     }
