@@ -3,12 +3,12 @@ import java.util.*;
 
 public class Main{
     
-    static int M, N, H;
+    static int N, M, H;
     static int[][][] grid;
-    static int[] dh = {0, 0, 0, 0, -1, 1};
+    static Queue<int[]> q = new LinkedList<>();
     static int[] dx = {-1, 1, 0, 0, 0, 0};
     static int[] dy = {0, 0, -1, 1, 0, 0};
-    static Queue<int[]> q = new LinkedList<>();
+    static int[] dz = {0, 0, 0, 0, -1, 1};
     
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,7 +24,7 @@ public class Main{
             for(int i = 0; i < N; i++){
                 st = new StringTokenizer(br.readLine());
                 for(int j = 0; j < M; j++){
-                    grid[h][i][j] = Integer.parseInt(st.nextToken());;
+                    grid[h][i][j] = Integer.parseInt(st.nextToken());
                     if(grid[h][i][j] == 1){
                         q.add(new int[]{h, i, j});
                     }
@@ -32,46 +32,45 @@ public class Main{
             }
         }
         
-        int answer = bfs();
-        System.out.println(answer);
+        int result = bfs();
+        System.out.println(result);
     }
     
     static int bfs(){
         while(!q.isEmpty()){
-            int[] cur = q.poll();
-            int h = cur[0], x = cur[1], y = cur[2];
+            int[] cur  = q.poll();
+            int z = cur[0], x = cur[1], y = cur[2];
             
             for(int d = 0; d < 6; d++){
-                int nh = h + dh[d];
-                int nx = x + dx[d];
-                int ny = y + dy[d];
+                int nx = cur[1] + dx[d];
+                int ny = cur[2] + dy[d];
+                int nz = cur[0] + dz[d];
                 
-                if(nh < 0 || nh >= H || nx < 0 || nx >= N || ny < 0 || ny >= M){
+                if(nx < 0 || ny < 0 || nz < 0 || nx >= N || ny >= M || nz >= H){
                     continue;
-                } 
-                if(grid[nh][nx][ny] == -1 || grid[nh][nx][ny] == 1){
+                }
+                if(grid[nz][nx][ny] == -1 || grid[nz][nx][ny] == 1){
                     continue;
                 }
                 
-                if(grid[nh][nx][ny] == 0){
-                    grid[nh][nx][ny] = grid[h][x][y] + 1;
-                    q.add(new int[]{nh, nx, ny});
+                if(grid[nz][nx][ny] == 0){
+                    q.add(new int[]{nz, nx, ny});
+                    grid[nz][nx][ny] = grid[z][x][y] + 1;
                 }
             }
         }
         
-        int answer = 0;
+        int result = 0;
         for(int h = 0; h < H; h++){
             for(int i = 0; i < N; i++){
                 for(int j = 0; j < M; j++){
                     if(grid[h][i][j] == 0){
                         return -1;
                     }
-                    answer = Math.max(answer, grid[h][i][j]);
+                    result = Math.max(result, grid[h][i][j]);
                 }
             }
         }
-        
-        return answer - 1;
+        return result - 1;
     }
 }
