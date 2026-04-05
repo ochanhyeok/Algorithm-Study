@@ -41,15 +41,15 @@ public class Main{
             int[] cur = q.poll();
             int x = cur[0], y = cur[1], broken = cur[2], dist = cur[3];
             
+            if(x == N - 1 && y == M - 1){
+                return dist;
+            }
+            
             for(int d = 0; d < 4; d++){
                 int nx = x + dx[d];
                 int ny = y + dy[d];
                 
                 if(nx < 0 || ny < 0 || nx >= N || ny >= M) continue;
-                
-                if(nx == N - 1 && ny == M - 1){
-                    return dist + 1;
-                }
                 
                 if(grid[nx][ny] == 0 && !visited[nx][ny][broken]){
                     visited[nx][ny][broken] = true;
