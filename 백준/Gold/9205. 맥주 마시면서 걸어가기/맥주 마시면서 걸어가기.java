@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Main{
     
-    static int n;
+    static int N;
     static int[] x, y;
     
     public static void main(String[] args) throws IOException{
@@ -13,16 +13,16 @@ public class Main{
         
         int T = Integer.parseInt(br.readLine());
         
-        for(int i = 0; i < T; i++){
-            n = Integer.parseInt(br.readLine());
-            x = new int[n + 2];
-            y = new int[n + 2];
-            
-            for(int j = 0; j <= n + 1; j++){
+        for(int t = 0; t < T; t++){
+            N = Integer.parseInt(br.readLine());
+            x = new int[N + 2];
+            y = new int[N + 2];
+            for(int i = 0; i < N + 2; i++){
                 st = new StringTokenizer(br.readLine());
-                x[j] = Integer.parseInt(st.nextToken());
-                y[j] = Integer.parseInt(st.nextToken());
+                x[i] = Integer.parseInt(st.nextToken());
+                y[i] = Integer.parseInt(st.nextToken());
             }
+            
             if(bfs()){
                 sb.append("happy\n");
             } else {
@@ -35,19 +35,19 @@ public class Main{
     
     static boolean bfs(){
         Queue<Integer> q = new LinkedList<>();
-        boolean[] visited = new boolean[n + 2];
+        boolean[] visited = new boolean[N + 2];
         q.add(0);
         visited[0] = true;
         
         while(!q.isEmpty()){
             int cur = q.poll();
             
-            if(cur == n + 1) return true;
+            if(cur == N + 1) return true;
             
-            for(int next = 1; next <= n + 1; next++){
+            for(int next = 1; next < N + 2; next++){
                 if(!visited[next]){
-                    int dist = Math.abs(x[cur] - x[next])
-                                + Math.abs(y[cur] - y[next]);
+                    int dist = Math.abs(x[next] - x[cur])
+                        + Math.abs(y[next] - y[cur]);
                     if(dist <= 1000){
                         visited[next] = true;
                         q.add(next);
@@ -55,6 +55,7 @@ public class Main{
                 }
             }
         }
+        
         return false;
     }
 }
