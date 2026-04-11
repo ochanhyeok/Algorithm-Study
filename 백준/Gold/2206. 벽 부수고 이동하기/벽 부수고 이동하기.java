@@ -11,7 +11,7 @@ public class Main{
     
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine())    ;
         
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
@@ -26,6 +26,7 @@ public class Main{
         }
         
         int result = bfs();
+        
         System.out.println(result);
     }
     
@@ -39,11 +40,9 @@ public class Main{
         
         while(!q.isEmpty()){
             int[] cur = q.poll();
-            int x = cur[0], y = cur[1], broken = cur[2], dist = cur[3];
+            int x = cur[0], y = cur[1], cnt = cur[2], dist = cur[3];
             
-            if(x == N - 1 && y == M - 1){
-                return dist;
-            }
+            if(x == N - 1 && y == M - 1) return dist;
             
             for(int d = 0; d < 4; d++){
                 int nx = x + dx[d];
@@ -51,15 +50,16 @@ public class Main{
                 
                 if(nx < 0 || ny < 0 || nx >= N || ny >= M) continue;
                 
-                if(grid[nx][ny] == 0 && !visited[nx][ny][broken]){
-                    visited[nx][ny][broken] = true;
-                    q.add(new int[]{nx, ny, broken, dist + 1});
-                } else if(grid[nx][ny] == 1 && broken == 0 && !visited[nx][ny][1]){
+                if(grid[nx][ny] == 0 && !visited[nx][ny][cnt]){
+                    visited[nx][ny][cnt] = true;
+                    q.add(new int[]{nx, ny, cnt, dist + 1});
+                } else if(grid[nx][ny] == 1 && cnt == 0 && !visited[nx][ny][1]){
                     visited[nx][ny][1] = true;
                     q.add(new int[]{nx, ny, 1, dist + 1});
                 }
             }
         }
+        
         return -1;
     }
 }
