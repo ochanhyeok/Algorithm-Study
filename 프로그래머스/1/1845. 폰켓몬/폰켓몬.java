@@ -1,21 +1,15 @@
 import java.util.*;
-import java.io.*;
 
 class Solution {
     public int solution(int[] nums) {
-        int maxPick = nums.length / 2;
-        
-        
-        HashSet<Integer> types = new HashSet<>();
+        Set<Integer> set = new HashSet<>();
         
         for(int num : nums){
-            types.add(num);
+            set.add(num);
         }
         
-        int typeCnt = types.size();
+        int n = nums.length / 2;
         
-        int answer = Math.min(maxPick, typeCnt);
-        
-        return answer;
+        return Math.min(set.size(), n);
     }
 }
