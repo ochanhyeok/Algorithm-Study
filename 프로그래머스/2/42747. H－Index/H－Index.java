@@ -14,23 +14,23 @@ class Solution {
             
             if(canUse(citations, mid)){
                 answer = mid;
-                right = mid - 1;
-            } else {
                 left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
         
         return answer;
     }
-    
-    static boolean canUse(int[] citations, int mid){
+    // 0 1 3 5 6
+    boolean canUse(int[] citations, int mid){
         int cnt = 0;
-        for(int ct : citations){
-            if(ct > mid){
+        for(int ci : citations){
+            if(ci >= mid){
                 cnt++;
             }
         }
         
-        return cnt <= mid;
+        return cnt >= mid;
     }
 }
