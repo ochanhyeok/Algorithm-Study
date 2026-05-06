@@ -1,20 +1,24 @@
 import java.util.*;
-import java.util.stream.*;
 
-class Solution { // int -> String -> sort
+class Solution {   
     public String solution(int[] numbers) {
-        List<String> result = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        String[] nums = new String[numbers.length];
         
-        for(int num : numbers){
-            result.add(String.valueOf(num));
+        for(int i = 0; i < numbers.length; i++){
+            nums[i] = String.valueOf(numbers[i]);
         }
         
-        result.sort((a, b) -> (b + a).compareTo(a + b));
+        Arrays.sort(nums, (a, b) -> (b + a).compareTo(a + b));
         
-        if("0".equals(result.get(0))){
+        if("0".equals(nums[0])){
             return "0";
         }
         
-        return result.stream().collect(Collectors.joining());
-    }
+        for(int i = 0; i < numbers.length; i++){
+            sb.append(nums[i]);
+        }
+        
+        return sb.toString();
+    }   
 }
