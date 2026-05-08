@@ -10,8 +10,6 @@ class Solution {
             map.put(type, map.getOrDefault(type, 0) + 1);
         }
         
-        map.forEach((a, b) -> System.out.println(a + ", " + b));
-        
         for(Map.Entry<String, Integer> entry : map.entrySet()){
             answer *= entry.getValue() + 1;
         }
