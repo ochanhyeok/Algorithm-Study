@@ -2,44 +2,34 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] answers) {
-        List<Integer> list = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
         int[] supo1 = {1, 2, 3, 4, 5};
         int[] supo2 = {2, 1, 2, 3, 2, 4, 2, 5};
         int[] supo3 = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
-        int cnt1 = 0, cnt2 = 0, cnt3 = 0;
         int len1 = supo1.length;
         int len2 = supo2.length;
         int len3 = supo3.length;
-        System.out.println(len1 + ", " + len2 + ", " + len3);
-        for(int i = 0; i < answers.length; i++){
-            if(supo1[i % len1] == answers[i]){
+        
+        int idx = 0;
+        int cnt1 = 0, cnt2 = 0, cnt3 = 0;
+        for(int ans : answers){
+            if(ans == supo1[idx % len1]){
                 cnt1++;
             }
-            if(supo2[i % len2] == answers[i]){
+            if(ans == supo2[idx % len2]){
                 cnt2++;
             }
-            if(supo3[i % len3] == answers[i]){
+            if(ans == supo3[idx % len3]){
                 cnt3++;
             }
-            // System.out.println("cnt1 = " + cnt1 + ", cnt2 = " + cnt2 + ", cnt3 = " + cnt3);
+            idx++;
         }
-        
         int max = Math.max(cnt1, Math.max(cnt2, cnt3));
         
-        if(cnt1 == max){
-            list.add(1); 
-        }
-        if(cnt2 == max){
-            list.add(2);
-        }
-        if(cnt3 == max){
-            list.add(3);
-        }
+        if(cnt1 == max) result.add(1);
+        if(cnt2 == max) result.add(2);
+        if(cnt3 == max) result.add(3);
         
-        if(list.size() < 1){
-            list = List.of(1, 2, 3);
-        }
-
-        return list.stream().mapToInt(i -> i).toArray();
+        return result.stream().mapToInt(i -> i).toArray();
     }
 }
