@@ -2,8 +2,8 @@ import java.util.*;
 
 class Solution {
     
-    Set<Integer> set = new HashSet<>();
     boolean[] visited;
+    Set<Integer> set = new HashSet<>();
     
     public int solution(String numbers) {
         int answer = 0;
@@ -37,7 +37,7 @@ class Solution {
         for(int i = 0; i < numbers.length(); i++){
             if(!visited[i]){
                 visited[i] = true;
-                dfs(numbers, cur + numbers.charAt(i)); // 자리하나 더 붙이기
+                dfs(numbers, cur + numbers.charAt(i));
                 visited[i] = false;
             }
         }
