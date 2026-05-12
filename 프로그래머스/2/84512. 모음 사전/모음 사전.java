@@ -2,8 +2,8 @@ import java.util.*;
 
 class Solution {
     
-    static String[] vowels = {"A", "E", "I", "O", "U"};
-    static List<String> dict = new ArrayList<>();
+    String[] vowels = {"A", "E", "I", "O", "U"};
+    List<String> dict = new ArrayList<>();
     
     public int solution(String word) {
         
@@ -12,7 +12,7 @@ class Solution {
         return dict.indexOf(word) + 1;
     }
     
-    static void dfs(String cur){
+    void dfs(String cur){
         if(cur.length() > 5){
             return;
         }
