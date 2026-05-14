@@ -1,8 +1,9 @@
 class Solution {
     public int[] solution(int brown, int yellow) {
+        int[] answer = {};
         int total = brown + yellow;
         
-        for(int h = 3; h * h <= total; h++){
+        for(int h = 3; h <= total; h++){
             if(total % h != 0){
                 continue;
             }
@@ -13,6 +14,6 @@ class Solution {
             }
         }
         
-        return new int[]{};
+        return answer;
     }
 }
