@@ -4,14 +4,13 @@ public class Solution {
     public int[] solution(int []arr) {
         List<Integer> result = new ArrayList<>();
         
-        result.add(arr[0]);
-        
-        for(int i = 1; i < arr.length; i++){
-            if(arr[i] != arr[i - 1]){
+        for(int i = 0; i < arr.length - 1; i++){
+            if(arr[i] != arr[i + 1]){
                 result.add(arr[i]);
             }
         }
-        
+        result.add(arr[arr.length - 1]);
+
         return result.stream().mapToInt(i -> i).toArray();
     }
 }
