@@ -2,7 +2,7 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] prices) {
-        int[] result = new int[prices.length];
+        List<Integer> result = new ArrayList<>();
         
         for(int i = 0; i < prices.length; i++){
             int cnt = 0;
@@ -16,9 +16,9 @@ class Solution {
                 }
             }
             
-            result[i] = cnt;
+            result.add(cnt);
         }
         
-        return result;
+        return result.stream().mapToInt(i -> i).toArray();
     }
 }
