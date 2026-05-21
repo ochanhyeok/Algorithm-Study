@@ -2,35 +2,33 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        Queue<Integer> progressQueue = new LinkedList<>();
-        Queue<Integer> speedQueue = new LinkedList<>();
         List<Integer> result = new ArrayList<>();
+        Queue<Integer> progressQ = new LinkedList<>();
+        Queue<Integer> speedQ = new LinkedList<>();
         
         for(int i = 0; i < progresses.length; i++){
-            progressQueue.offer(progresses[i]);
-            speedQueue.offer(speeds[i]);
+            progressQ.add(progresses[i]);
+            speedQ.add(speeds[i]);
         }
         
-        while(!progressQueue.isEmpty()){
-            int size = progressQueue.size();
+        while(!progressQ.isEmpty()){
+            int size = progressQ.size();
             
-            // 1일치 진행량 
             for(int i = 0; i < size; i++){
-                int progress = progressQueue.poll() + speedQueue.peek();
-                int speed = speedQueue.poll();
-                progressQueue.offer(progress);
-                speedQueue.offer(speed);
+                int curP = progressQ.poll() + speedQ.peek();
+                progressQ.add(curP);
+                speedQ.add(speedQ.poll());
             }
             
             int cnt = 0;
-            while(!progressQueue.isEmpty() && progressQueue.peek() >= 100){
-                progressQueue.poll();
-                speedQueue.poll();
+            while(!progressQ.isEmpty() && progressQ.peek() >= 100){
+                progressQ.poll();
+                speedQ.poll();
                 cnt++;
             }
             
             if(cnt > 0){
-                result.add(cnt);   
+                result.add(cnt);
             }
         }
         
