@@ -20,11 +20,12 @@ class Solution {
                 speedQ.add(speedQ.poll());
             }
             
+            
             int cnt = 0;
             while(!progressQ.isEmpty() && progressQ.peek() >= 100){
+                cnt++;
                 progressQ.poll();
                 speedQ.poll();
-                cnt++;
             }
             
             if(cnt > 0){
