@@ -6,7 +6,7 @@ class Solution {
         return bfs(map, characterX * 2, characterY * 2, itemX * 2, itemY * 2);
     }
     
-    static int[][] buildMap(int[][] rectangle){
+    int[][] buildMap(int[][] rectangle){
         int[][] map = new int[101][101];
         
         for(int[] r : rectangle){
@@ -25,6 +25,7 @@ class Solution {
         
         for(int[] r : rectangle){
             int x1 = r[0] * 2, y1 = r[1] * 2, x2 = r[2] * 2, y2 = r[3] * 2;
+            
             for(int x = x1 + 1; x < x2; x++){
                 for(int y = y1 + 1; y < y2; y++){
                     map[x][y] = 0;
@@ -35,20 +36,19 @@ class Solution {
         return map;
     }
     
-    static int bfs(int[][] map, int sx, int sy, int ex, int ey){
-        Queue<int[]> queue = new LinkedList<>();
+    int bfs(int[][] map, int sx, int sy, int ex, int ey){
+        Queue<int[]> q = new LinkedList<>();
         boolean[][] visited = new boolean[101][101];
         int[] dx = {-1, 1, 0, 0};
         int[] dy = {0, 0, -1, 1};
         
-        queue.offer(new int[]{sx, sy, 1});
+        q.offer(new int[]{sx, sy, 1});
         visited[sx][sy] = true;
         
-        while(!queue.isEmpty()){
-            int[] cur = queue.poll();
+        while(!q.isEmpty()){
+            int[] cur = q.poll();
             
             int x = cur[0], y = cur[1], dist = cur[2];
-            
             if(x == ex && y == ey){
                 return dist / 2;
             }
@@ -57,14 +57,11 @@ class Solution {
                 int nx = x + dx[d];
                 int ny = y + dy[d];
                 
-                if(nx < 0 || ny < 0 || nx > 100 || ny > 100){
-                    continue;
-                }
-                
+                if(nx < 0 || ny < 0 || nx >= 101 || ny >= 101) continue;
                 
                 if(!visited[nx][ny] && map[nx][ny] == 1){
                     visited[nx][ny] = true;
-                    queue.offer(new int[]{nx, ny, dist + 1});
+                    q.offer(new int[]{nx, ny, dist + 1});
                 }
             }
         }
