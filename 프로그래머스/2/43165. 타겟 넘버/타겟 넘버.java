@@ -1,6 +1,6 @@
 class Solution {
     
-    static int answer = 0;
+    int answer = 0;
     
     public int solution(int[] numbers, int target) {
         
@@ -9,8 +9,8 @@ class Solution {
         return answer;
     }
     
-    static void dfs(int[] numbers, int target, int idx, int sum){
-        if(numbers.length == idx){
+    void dfs(int[] numbers, int target, int idx, int sum){
+        if(idx == numbers.length){
             if(sum == target){
                 answer++;
             }
