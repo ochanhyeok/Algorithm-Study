@@ -2,47 +2,51 @@ import java.util.*;
 
 class Solution {
     
-    static int[] dy = {1, -1, 0, 0};
-    static int[] dx = {0, 0, 1, -1};
+    int[] dx = {-1, 1, 0, 0};
+    int[] dy = {0, 0, -1, 1};
+    int n, m;
     
     public int solution(int[][] maps) {
-        int answer = 0;
-        int n = maps.length;
-        int m = maps[0].length;
+        n = maps.length;
+        m = maps[0].length;
         
-        int[][] dist = new int[n][m];
+        return bfs(maps);
+    }
+    
+    int bfs(int[][] maps){       
         Queue<int[]> q = new LinkedList<>();
-        
-        dist[0][0] = 1;
+        int[][] dist = new int[n][m];
         q.offer(new int[]{0, 0});
+        dist[0][0] = 1;
         
-        // bfs
         while(!q.isEmpty()){
             int[] cur = q.poll();
-            int y = cur[0];
-            int x = cur[1];
+            int x = cur[0];
+            int y = cur[1];
             
-            for(int dir = 0; dir < 4; dir++){
-                int ny = y + dy[dir];
-                int nx = x + dx[dir];
+            for(int d = 0; d < 4; d++){
+                int nx = x + dx[d];
+                int ny = y + dy[d];
                 
-                if(ny < 0 || nx < 0 || ny >= n || nx >= m) {
+                if(nx < 0 || nx >= n || ny < 0 || ny >= m){
                     continue;
                 }
-                if(maps[ny][nx] == 0){
+                if(maps[nx][ny] == 0){
                     continue;
                 }
-                if(dist[ny][nx] != 0){
+                if(dist[nx][ny] != 0){
                     continue;
                 }
                 
-                dist[ny][nx] = dist[y][x] + 1;
-                q.offer(new int[]{ny, nx});
+                dist[nx][ny] = dist[x][y] + 1;
+                q.offer(new int[]{nx, ny});
             }
         }
         
-        answer = dist[n - 1][m - 1];
+        if(dist[n - 1][m - 1] == 0){
+            return -1;
+        }
         
-        return answer == 0 ? -1 : answer;
+        return dist[n - 1][m - 1];
     }
 }
