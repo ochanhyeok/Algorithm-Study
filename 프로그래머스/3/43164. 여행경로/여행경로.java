@@ -2,14 +2,15 @@ import java.util.*;
 
 class Solution {
     
-    String[] answer;
-    boolean[] visited;
+    static boolean[] visited;
+    static String[] answer;
+    static boolean found;
     
     public String[] solution(String[][] tickets) {
-        int n = tickets.length;
+        int N = tickets.length;
         
-        answer = new String[n + 1];
-        visited = new boolean[n + 1];
+        visited = new boolean[N + 1];
+        answer = new String[N + 1];
         
         Arrays.sort(tickets, (a, b) -> {
             if(!a[0].equals(b[0])){
@@ -24,22 +25,22 @@ class Solution {
         return answer;
     }
     
-    boolean dfs(String cur, int depth, String[][] tickets){
+    static void dfs(String cur, int depth, String[][] tickets){
         if(depth == tickets.length){
-            return true;
+            found = true;
+            return;
         }
         
         for(int i = 0; i < tickets.length; i++){
-            if(!visited[i] && tickets[i][0].equals(cur)){
+            if(!visited[i] && cur.equals(tickets[i][0])){
                 visited[i] = true;
                 answer[depth + 1] = tickets[i][1];
-                if(dfs(tickets[i][1], depth + 1, tickets)){
-                    return true;
+                dfs(tickets[i][1], depth + 1, tickets);
+                if(found){
+                    return;
                 }
                 visited[i] = false;
-                
             }
         }
-        return false;
     }
 }
