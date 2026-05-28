@@ -10,19 +10,19 @@ class Solution {
         
         for(int i = 0; i < n; i++){
             if(!visited[i]){
-                dfs(i, computers);
+                dfs(computers, i);
                 answer++;
             }
-        }
+        }        
         
         return answer;
     }
     
-    static void dfs(int node, int[][] computers){
+    static void dfs(int[][] computers, int node){
         visited[node] = true;
         for(int i = 0; i < computers.length; i++){
-            if(!visited[i] && computers[node][i] == 1 && node != i){
-                dfs(i, computers);
+            if(!visited[i] && node != i && computers[node][i] == 1){
+                dfs(computers, i);
             }
         }
     }
