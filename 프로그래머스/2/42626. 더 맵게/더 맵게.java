@@ -2,11 +2,11 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] scoville, int K) {
+        int answer = 0;
         PriorityQueue<Integer> pq = new PriorityQueue<>();
-        int cnt = 0;
         
-        for(int i = 0; i < scoville.length; i++){
-            pq.offer(scoville[i]);
+        for(int sco : scoville){
+            pq.offer(sco);
         }
         
         while(!pq.isEmpty() && pq.peek() < K){
@@ -14,14 +14,12 @@ class Solution {
                 return -1;
             }
             
-            int sco1 = pq.poll();
-            int sco2 = pq.poll();
-            int newSco = sco1 + (sco2 * 2);
-            
-            pq.offer(newSco);
-            cnt++;
+            int totalSco = pq.poll() + pq.poll() * 2;
+            pq.offer(totalSco);
+            answer++;
         }
         
-        return cnt;
+        
+        return answer;
     }
 }
