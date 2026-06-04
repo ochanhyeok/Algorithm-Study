@@ -8,26 +8,32 @@ class Solution {
     public int solution(int[] arrows) {
         Set<String> dots = new HashSet<>();
         Set<String> lines = new HashSet<>();
+        
         int x = 0, y = 0, rooms = 0;
         
-        dots.add(x + "," + y);
+        dots.add("0,0");
         
         for(int dir : arrows){
             for(int i = 0; i < 2; i++){
                 int nx = x + dx[dir], ny = y + dy[dir];
-                String from = x + "," + y, to = nx + "," + ny;
+                
+                String from = x + "," + y;
+                String to = nx + "," + ny;
                 
                 String line = from.compareTo(to) < 0 ? from + "_" + to : to + "_" + from;
                 
                 if(dots.contains(to) && !lines.contains(line)){
                     rooms++;
                 }
-                dots.add(to);
+                
                 lines.add(line);
+                dots.add(to);
+                
                 x = nx;
                 y = ny;
             }
         }
+        
         
         return rooms;
     }
