@@ -11,37 +11,37 @@ class Solution {
         graph = new List[n + 1];
         reGraph = new List[n + 1];
         
-        for(int i = 0; i <= n; i++){
+        for(int i = 1; i <= n; i++){
             graph[i] = new ArrayList<>();
             reGraph[i] = new ArrayList<>();
         }
         
-        for(int[] r: results){
+        for(int [] r : results){
             graph[r[0]].add(r[1]);
             reGraph[r[1]].add(r[0]);
         }
         
         for(int i = 1; i <= n; i++){
             visited = new boolean[n + 1];
-            int win = dfs(i, graph) - 1;
-            
+            int win = bfs(i, graph) - 1;
             visited = new boolean[n + 1];
-            int lose = dfs(i, reGraph) - 1;
+            int lose = bfs(i, reGraph) - 1;
             
             if(win + lose == n - 1){
                 answer++;
             }
         }
         
+        
         return answer;
     }
     
-    static int dfs(int node, List<Integer>[] g){
+    static int bfs(int node, List<Integer>[] graph){
         visited[node] = true;
         int cnt = 1;
-        for(int next : g[node]){
+        for(int next : graph[node]){
             if(!visited[next]){
-                cnt += dfs(next, g);
+                cnt += bfs(next, graph);
             }
         }
         
