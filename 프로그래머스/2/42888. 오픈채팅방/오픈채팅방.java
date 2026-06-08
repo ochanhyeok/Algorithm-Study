@@ -2,40 +2,30 @@ import java.util.*;
 
 class Solution {
     public String[] solution(String[] record) {
-        Map<String, String> nick = new HashMap<>();
-        List<String[]> logs = new ArrayList<>();
+        HashMap<String, String> map = new HashMap<>();
+        int idx = 0;
         
-        // Enter uid1234 Muzi
-        // Leave uid1234
-        // Change uid4567 Ryan
-        for(String line : record){
-            String[] temp = line.split(" ");
-            String cmd = temp[0];
-            String uid = temp[1];
+        for(String rec : record){
+            String[] cmd = rec.split(" ");
             
-            if("Enter".equals(cmd)){
-                String name = temp[2];
-                nick.put(uid, name);
-                logs.add(new String[]{uid, "Enter"});
-            } else if("Leave".equals(cmd)){
-                logs.add(new String[]{uid, "Leave"});
-            } else if("Change".equals(cmd)){
-                String name = temp[2];
-                nick.put(uid, name);
+            if("Enter".equals(cmd[0])){
+                map.put(cmd[1], cmd[2]);
+                idx++;
+            } else if("Leave".equals(cmd[0])){
+                idx++;
+            } else {
+                map.put(cmd[1], cmd[2]);
             }
         }
         
-        String[] answer = new String[logs.size()];
-        int idx = 0;
-        for(String[] log : logs){
-            String uid = log[0];
-            String cmd = log[1];
-            String name = nick.get(uid);
-            
-            if("Enter".equals(cmd)){
-                answer[idx++] = name + "님이 들어왔습니다.";
-            } else {
-                answer[idx++] = name + "님이 나갔습니다.";
+        String[] answer = new String[idx];
+        idx = 0;
+        for(String rec : record){
+            String[] cmd = rec.split(" ");
+            if("Enter".equals(cmd[0])){
+                answer[idx++] = map.get(cmd[1]) + "님이 들어왔습니다.";
+            } else if("Leave".equals(cmd[0])){
+                answer[idx++] = map.get(cmd[1]) + "님이 나갔습니다.";
             }
         }
         
