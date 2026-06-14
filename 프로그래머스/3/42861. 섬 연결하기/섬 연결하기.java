@@ -4,10 +4,8 @@ class Solution {
     
     static int[] parent;
     
-    static class Edge implements Comparable<Edge>{
-        int from;
-        int to;
-        int cost;
+    static class Edge implements Comparable<Edge> {
+        int from, to, cost;
         
         Edge(int from, int to, int cost){
             this.from = from;
@@ -21,11 +19,11 @@ class Solution {
         }
     }
     
-    static int find(int x){
-        if(parent[x] == x){
-            return x;
+    static int find(int a){
+        if(a == parent[a]){
+            return a;
         }
-        return parent[x] = find(parent[x]);
+        return parent[a] = find(parent[a]);
     }
     
     static void union(int a, int b){
@@ -39,8 +37,8 @@ class Solution {
     public int solution(int n, int[][] costs) {
         int answer = 0;
         List<Edge> edges = new ArrayList<>();
-        
         parent = new int[n];
+        
         for(int i = 0; i < n; i++){
             parent[i] = i;
         }
@@ -62,9 +60,6 @@ class Solution {
                 }
             }
         }
-        
-        
-               
         
         return answer;
     }
