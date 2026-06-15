@@ -2,20 +2,20 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] d, int budget) {
-        int answer = 0;
+        int max = Integer.MIN_VALUE;
+        int cnt = 0;
         
         Arrays.sort(d);
         
         for(int i = 0; i < d.length; i++){
-            if(budget - d[i] < 0){
-                break;
+            if(budget - d[i] >= 0){
+                budget = budget - d[i];
+                cnt++;
+                System.out.println("budget: " + budget + ", cnt: " + cnt);
             }
-            budget -= d[i];
-            answer++;
+            max = Math.max(cnt, max);
         }
         
-        System.out.println(Arrays.toString(d));
-        
-        return answer;
+        return max;
     }
 }
