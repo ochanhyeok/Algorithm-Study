@@ -1,40 +1,29 @@
 import java.util.*;
 
 class Solution {
+    
     public int solution(int[] topping) {
         int answer = 0;
         Map<Integer, Integer> map = new HashMap<>();
+        Set<Integer> set = new HashSet<>();
         
-        for(int t : topping){
-            map.put(t, map.getOrDefault(t, 0) + 1);
+        for(int i = 0; i < topping.length; i++){
+            map.put(topping[i], map.getOrDefault(topping[i], 0) + 1);
         }
         
-        int rightKinds = map.size();
+        // map.forEach((a, b) -> System.out.println(a + ", " + b));
         
-        Set<Integer> set = new HashSet<>();
-        int leftKinds = 0;
-        
-        for(int i = 0; i < topping.length - 1; i++){
-            int t = topping[i];
-            
-            if(!set.contains(t)){
-                set.add(t);
-                leftKinds++;
+        for(int i = 0; i < topping.length; i++){
+            int top = topping[i];
+            map.put(top, map.get(top) - 1);
+            set.add(top);
+            if(map.get(top) == 0){
+                map.remove(top);
             }
-            
-            map.put(t, map.get(t) - 1);
-            if(map.get(t) == 0){
-                map.remove(t);
-                rightKinds--;
-            }
-            
-            if(leftKinds == rightKinds){
+            if(map.size() == set.size()){
                 answer++;
             }
         }
-        
-        
-        
         
         return answer;
     }
