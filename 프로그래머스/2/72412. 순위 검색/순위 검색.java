@@ -1,69 +1,64 @@
 import java.util.*;
 
 class Solution {
-    
-    static Map<String, List<Integer>> map;
-    
     public int[] solution(String[] info, String[] query) {
         int[] answer = new int[query.length];
-        map = new HashMap<>();
+        Map<String, List<Integer>> map = new HashMap<>();
         
-        String[][] infos = new String[info.length][5];
         for(String s : info){
-            String[] arr = s.split(" ");
-            makeComb("", 0, arr);
-        }
-        
-        // key의 점수 리스트 정렬
-        for(String key : map.keySet()){
-            Collections.sort(map.get(key));
-        }
-        
-        int idx = 0;
-        for(String q : query){
-            String replaced = q.replace(" and ", "");
-            String[] str = replaced.split(" ");
-            String key = str[0];
-            int score = Integer.parseInt(str[1]);
+            String[] t = s.split(" ");
+            int score = Integer.parseInt(t[4]);
             
-            answer[idx++] = countByBinarySearch(key, score);
+            String[] lang = {t[0], "-"};
+            String[] job = {t[1], "-"};
+            String[] career = {t[2], "-"};
+            String[] food = {t[3], "-"};
+            for(String a : lang){
+                for(String b : job){
+                    for(String c : career){
+                        for(String d : food){
+                            String key = a + " " + b + " " + c + " " + d;
+                            map.computeIfAbsent(key, k -> new ArrayList<>()).add(score);
+                        }
+                    }
+                }
+            }
+
+        }
+        
+        for(List<Integer> list : map.values()){
+            Collections.sort(list);
+        }
+        
+        for(int i = 0; i < query.length; i++){
+            String q = query[i].replaceAll(" and ", " ");
+            String[] t = q.split(" ");
+            
+            int target = Integer.parseInt(t[4]);
+            String key = t[0] + " " + t[1] + " " + t[2] + " " + t[3];
+            
+            List<Integer> list = map.get(key);
+            if(list == null){
+                answer[i] = 0;
+                continue;
+            }
+            
+            answer[i] = list.size() - lowerBound(list, target);
         }
         
         return answer;
     }
     
-    static void makeComb(String cur, int depth, String[] arr){
-        // 언어/직군/경력/소울푸드
-        if(depth == 4){
-            int score = Integer.parseInt(arr[4]);
-            map.computeIfAbsent(cur, k -> new ArrayList<>()).add(score);
-            return;
-        }
-        
-        makeComb(cur + "-", depth + 1, arr);
-        
-        makeComb(cur + arr[depth], depth + 1, arr);
-    }
-    
-    static int countByBinarySearch(String key, int score){
-        if(!map.containsKey(key)){
-            return 0;
-        }
-        
-        List<Integer> list = map.get(key);
-        int start = 0;
-        int end = list.size() - 1;
-        
-        // score 이상이 처음 나오는 인덱스 찾기
-        while(start <= end){
-            int mid = (start + end) / 2;
-            if(list.get(mid) < score){
-                start = mid + 1;
+    private int lowerBound(List<Integer> list, int target){
+        int lo = 0, hi = list.size();
+        while(lo < hi){
+            int mid = (lo + hi) / 2;
+            if(list.get(mid) >= target){
+                hi = mid;
             } else {
-                end = mid - 1;
+                lo = mid + 1;
             }
         }
-        
-        return list.size() - start;
+        return lo;
     }
 }
