@@ -2,19 +2,19 @@ import java.util.*;
 
 class Solution {
     
-    List<Integer>[] graph;
+    static List<Integer>[] graph;
     
     public int solution(int n, int[][] wires) {
         int answer = n;
-        graph = new ArrayList[n + 1];
+        graph = new List[n + 1];
         
         for(int i = 1; i <= n; i++){
             graph[i] = new ArrayList<>();
         }
         
-        for(int i = 0; i < wires.length; i++){
-            int a = wires[i][0];
-            int b = wires[i][1];
+        for(int[] wire : wires){
+            int a = wire[0];
+            int b = wire[1];
             graph[a].add(b);
             graph[b].add(a);
         }
@@ -39,12 +39,13 @@ class Solution {
         return answer;
     }
     
-    int dfs(int node, boolean[] visited){
-        visited[node] = true;
+    static int dfs(int node, boolean[] visited){
         int cnt = 1;
+        visited[node] = true;
         
         for(int next : graph[node]){
             if(!visited[next]){
+                visited[next] = true;
                 cnt += dfs(next, visited);
             }
         }
