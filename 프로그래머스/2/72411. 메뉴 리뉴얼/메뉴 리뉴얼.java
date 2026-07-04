@@ -1,63 +1,48 @@
 import java.util.*;
 
 class Solution {
-    
-    Map<String, Integer> countMap;
-    
     public String[] solution(String[] orders, int[] course) {
-        List<String> result = new ArrayList<>();
-        
-        for(int i = 0; i < orders.length; i++){
-            char[] arr = orders[i].toCharArray();
-            Arrays.sort(arr);
-            orders[i] = new String(arr);
-        }
+        List<String> answer = new ArrayList<>();
         
         for(int len : course){
-            countMap = new HashMap<>();
+            Map<String, Integer> counter = new HashMap<>();
             
             for(String order : orders){
-                if(order.length() < len){
-                    continue;
-                }
-                makeComb(order, new StringBuilder(), 0, len);
+                char[] arr = order.toCharArray();
+                Arrays.sort(arr);
+                makeComb(arr, 0, len, new StringBuilder(), counter);
             }
             
-            int max = 0;
-            for(int v : countMap.values()){
-                if(v > max){
-                    max = v;
-                }
-            }
-            
-            if(max < 2){
-                continue;
-            }
-            
-            for(Map.Entry<String, Integer> e : countMap.entrySet()){
-                if(e.getValue() == max){
-                    result.add(e.getKey());
-                }
-            }
-            
+            answer.addAll(pickMostOrdered(counter));
         }
+        Collections.sort(answer);
         
-        Collections.sort(result);
-        
-        return result.toArray(new String[0]);
+        return answer.toArray(new String[0]);
     }
     
-    private void makeComb(String order, StringBuilder sb, int idx, int len){
-        if(sb.length() == len){
-            String key = sb.toString();
-            countMap.put(key, countMap.getOrDefault(key, 0) + 1);
+    static void makeComb(char[] arr, int start, int k, StringBuilder cur, Map<String, Integer> counter){
+        if(k == 0){
+            counter.merge(cur.toString(), 1, Integer::sum);
             return;
         }
         
-        for(int i = idx; i < order.length(); i++){
-            sb.append(order.charAt(i));
-            makeComb(order, sb, i + 1, len);
-            sb.deleteCharAt(sb.length() - 1);
+        for(int i = start; i < arr.length; i++){
+            cur.append(arr[i]);
+            makeComb(arr, i + 1, k - 1, cur, counter);
+            cur.deleteCharAt(cur.length() - 1);
         }
+    }
+    
+    static List<String> pickMostOrdered(Map<String, Integer> counter){
+        int max = counter.values().stream().max(Integer::compare).orElse(0);
+        if(max < 2) return List.of();
+        
+        List<String> result = new ArrayList<>();
+        for(var e : counter.entrySet()){
+            if(e.getValue() == max){
+                result.add(e.getKey());
+            }
+        }
+        return result;
     }
 }
